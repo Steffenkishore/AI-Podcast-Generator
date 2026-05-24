@@ -263,17 +263,6 @@ Through this project, I learned:
 
 ---
 
-# 🚀 Future Improvements
-
-* Multi-language podcast generation
-* Different voice selections
-* Podcast download feature
-* User authentication
-* Podcast history storage
-* Streaming audio generation
-
----
-
 # 🙌 Credits
 
 Special thanks to NxtWave for teaching and guiding these AI automation concepts using n8n and AI tools.
