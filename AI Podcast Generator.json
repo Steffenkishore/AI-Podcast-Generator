@@ -1,0 +1,176 @@
+{
+  "name": "AI Podcast Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a professional podcast script writer.  Write a conversational and engaging podcast script on the topic: {{ $json.body.text }}.  Keep it around 2 minutes when spoken.  Use a friendly and informative tone, as if talking directly to listeners.  Avoid any headings, labels, or formatting. Output plain text only."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        48,
+        -32
+      ],
+      "id": "8fc06a47-8b9f-475a-87d9-9a363abb5613",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        128,
+        192
+      ],
+      "id": "0d19ccbb-d9b5-4167-86ed-2edae1c48e2b",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "yZfbBipU6jz6pRtn",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.murf.ai/v1/speech/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api-key",
+              "value": "ap2_856f5609-d0f3-4241-8ab6-2488798db91b"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.text }}"
+            },
+            {
+              "name": "voiceId",
+              "value": "natalie"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        400,
+        -32
+      ],
+      "id": "6c5c5b8d-b8d2-473e-9660-15403f97b9f4",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c4fbbe62-8d2d-447d-a5cc-4211e7358f66",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -176,
+        -32
+      ],
+      "id": "74c72fb0-8714-4791-b402-ef2cd4a3b148",
+      "name": "Webhook",
+      "webhookId": "c4fbbe62-8d2d-447d-a5cc-4211e7358f66"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        -32
+      ],
+      "id": "a224abe3-37bf-4cb3-80a2-54f226150b14",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "54b55960-3d6d-416f-8862-6e4cb419925d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0e6f22c776d64174a2b1ec8255f64cb71175f548aca89bd6e3c8e1ce5aae194c"
+  },
+  "id": "DuAr3B0hC2cQU3E9",
+  "tags": []
+}
