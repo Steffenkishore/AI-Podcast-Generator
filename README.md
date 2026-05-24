@@ -4,6 +4,8 @@ An AI-powered Podcast Generator that converts any topic into an audio podcast au
 
 This project allows users to enter a topic from a frontend interface, sends the request to an n8n workflow through a webhook, generates podcast content using AI, converts it into voice audio, and returns the generated podcast back to the user.
 
+## Live Link: https://bubbly-audio-box.lovable.app/
+
 ---
 
 ## 🚀 Features
