@@ -40,7 +40,7 @@ Frontend → Webhook → LLM Chain → Gemini AI → Murf AI → Respond to Webh
 
 # 📷 Workflow Screenshot
 
-![AI Podcast Generator Workflow](./Screenshot%202026-05-24%20190123.png)
+![AI-Podcast-Generator](./assets/n8n%20workflow%20screenshot.png)
 
 ---
 
